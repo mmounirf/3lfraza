@@ -14,6 +14,7 @@ import WorkIcon from "@material-ui/icons/Work";
 import CallIcon from "@material-ui/icons/Call";
 import Typical from "react-typical";
 
+
 const ElevationScroll = (props) => {
   const { children, window } = props;
   const trigger = useScrollTrigger({
