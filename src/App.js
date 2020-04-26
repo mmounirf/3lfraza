@@ -76,7 +76,7 @@ const App = (props) => {
             loop={Infinity}
             wrapper="h2"
           />
-          <h1> علي الفرازة</h1>
+          <h1> عالفرّازة</h1>
         </div>
       </div>
     </div>
