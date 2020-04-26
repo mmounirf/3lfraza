@@ -1,0 +1,28 @@
+.dashboard {
+    .container {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 1440px;
+        margin: 0 auto;
+        padding: 10px 0;
+        .tabs {
+            margin-left: 20px;
+
+            .tab {
+                .MuiTab-wrapper {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: flex-start;
+                    font-weight: bolder;
+                    color: #414a6b;
+                }
+            }
+        }
+        .tabContent {
+            flex: 1 1 auto;
+            padding: 20px;
+        }
+    }
+}

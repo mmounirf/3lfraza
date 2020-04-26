@@ -5,12 +5,23 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { ThemeProvider } from '@material-ui/core';
 import Theme from './Theme';
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import { stateReducers, initialState } from "./Redux/reducers";
+
+const store = createStore(stateReducers, initialState, composeWithDevTools());
 
 ReactDOM.render(
   <React.StrictMode>
+    <Provider store={store}>
     <ThemeProvider theme={Theme}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ThemeProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

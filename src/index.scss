@@ -4,4 +4,46 @@
 
 body {
   margin: 0;
+  background-color: #fafafa;
+}
+
+
+header {
+    background-color: #fafafa!important;
+    .inner {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 1440px;
+        margin: 0 auto;
+        padding: 10px 0;
+        .logo {
+            width: 15%;
+            img {
+                cursor: pointer;
+            }
+        }
+        .navigation {
+            width: 50%;
+            justify-content: space-between;
+            display: flex;
+            align-items: center;
+
+            &__secondary {
+                flex: 1 1 auto;
+                justify-content: flex-end;
+                display: flex;
+                a {
+                    margin: 0 10px;
+                }
+            }
+        }
+
+        span.MuiButton-label {
+            font-weight: bold;
+            span {
+                margin-right: 10px;
+            }
+        }
+    }
 }

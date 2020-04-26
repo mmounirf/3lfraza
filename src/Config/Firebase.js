@@ -15,6 +15,6 @@ const config = {
 };
 
 const Firebase = app.initializeApp(config);
-Firebase.auth().useDeviceLanguage();
+Firebase.auth().languageCode = "AR"
 
 export default Firebase;
