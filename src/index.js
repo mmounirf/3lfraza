@@ -14,15 +14,13 @@ import { stateReducers, initialState } from "./Redux/reducers";
 const store = createStore(stateReducers, initialState, composeWithDevTools());
 
 ReactDOM.render(
-  <React.StrictMode>
     <Provider store={store}>
     <ThemeProvider theme={Theme}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </ThemeProvider>
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
   document.getElementById('root')
 );
 

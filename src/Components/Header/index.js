@@ -14,18 +14,17 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutAction } from "../../Redux/actions";
 
-
 const Header = (props) => {
-  const user = useSelector(state => state.user);
-  
+  const user = useSelector((state) => state.user);
+
   let history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isLoggedIn = user && user.jwt;
   const handleClick = (event) => {
-    if(isLoggedIn) {
+    if (isLoggedIn) {
       setAnchorEl(event.currentTarget);
     } else {
-      history.push('login')
+      history.push("login");
     }
   };
 
@@ -34,9 +33,13 @@ const Header = (props) => {
   };
   const logout = () => {
     handleClose();
-    history.push('/');
+    history.push("/");
     dispatch(logoutAction());
-  }
+  };
+  const goToDashboard = () => {
+    handleClose();
+    history.push("dashboard");
+  };
   const dispatch = useDispatch();
   const ElevationScroll = (props) => {
     const { children, window } = props;
@@ -81,15 +84,17 @@ const Header = (props) => {
           </nav>
 
           <nav className="navigation__secondary">
-            <Button onClick={handleClick} variant="contained" color="primary" disableElevation>
+            <Button
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+              variant="contained"
+              color="primary"
+              disableElevation>
               <PersonIcon /> {user && user.jwt ? <span>{user.email}</span> : <span>تسجيل الدخول</span>}
             </Button>
-            <Menu
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            >
+            <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+              <MenuItem onClick={goToDashboard}>إدارة الحساب</MenuItem>
               <MenuItem onClick={logout}>تسجيل الخروج</MenuItem>
             </Menu>
             <Button href="#soon" variant="outlined" color="primary" disableElevation>
