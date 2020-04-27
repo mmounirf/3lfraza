@@ -25,4 +25,16 @@
             padding: 20px;
         }
     }
+
+    .header {
+        display: flex;
+        align-items: center;
+        h1 {
+            margin-left: 20px;
+        }
+    }
+
+    .productsTable {
+        text-align: right;
+    }
 }

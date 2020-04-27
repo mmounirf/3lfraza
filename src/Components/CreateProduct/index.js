@@ -9,10 +9,12 @@ import TextField from '@material-ui/core/TextField';
 import { CategoriesAutocomplete } from "..";
 import Firebase from "../../Config/Firebase";
 import { Save, Cancel } from "@material-ui/icons";
+import ActionButton from "../ActionButton";
 
 const CreateProduct = (props) => {
   const fileUpload = React.createRef();
-  const [img, setImg] = React.useState('')
+  const [img, setImg] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
 
   const [form, setForm] = React.useState({name: '', price: '', category: '', img: ''})
   const onCategoriesAutocompleteChange = category => {
@@ -25,12 +27,24 @@ const CreateProduct = (props) => {
   const closeDialog = () => {
     props.handleClose();
     setImg('');
-    setForm({name: '', price: '', category: '', img: ''})
+    setForm({name: '', price: '', category: '', img: ''});
   }
 
   const addProduct = () => {
-    Firebase.firestore().collection('products').add(form).then((resp) => {
-      closeDialog();
+    setLoading(true);
+    const uploadTask = Firebase.storage().ref().child(`products/${form.name}`).put(form.img);
+    uploadTask.on('state_changed', (snapshot) => {
+        // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      }, (error) => {
+        console.log(error)
+      }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          Firebase.firestore().collection('products').add({...form, img: downloadURL}).then((resp) => {
+            setLoading(false);
+            props.refreshProducts();
+            closeDialog();
+          })
+      });
     })
   }
 
@@ -40,11 +54,12 @@ const CreateProduct = (props) => {
 
   const fileSelect = (e) => {
     const file = e.target.files[0];
+    setForm({...form, img: file});
     const preview = URL.createObjectURL(file);
     const img = new Image();
     img.src = preview;
     img.onload = () => {
-      setImg(preview)
+      setImg(preview);
     }
   }
 
@@ -70,9 +85,18 @@ const CreateProduct = (props) => {
           </div>
         </DialogContent>
         <DialogActions>
-        <Button variant="outlined" fullWidth onClick={addProduct} color="primary" disableElevation>
-            <Save /> اضافة المنتج
-          </Button>
+
+        <ActionButton
+        fullWidth
+        onClick={addProduct}
+        color="primary"
+        loading={loading}
+        disableElevation
+        disabled={loading}
+        startIcon={<Save />}>
+        اضافة المنتج
+      </ActionButton>
+
           <Button variant="outlined" fullWidth onClick={closeDialog} color="primary">
             <Cancel /> إلغاء
           </Button>

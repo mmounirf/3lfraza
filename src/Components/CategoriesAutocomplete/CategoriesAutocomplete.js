@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TextField, CircularProgress } from "@material-ui/core";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import match from "./match";
 import parse from "./parse";
 import Firebase from "../../Config/Firebase";
 import { loadCategories } from "../../Redux/actions";
 
 const CategoriesAutocomplete = props => {
-  const categories = useSelector(state => state.categories);
   const [listOpen, setListOpen] = useState(false);
   const [categoriesList, setCategoriesList] = React.useState([]);
   const [selectedCategory, setSelectedCategory] = useState(props.selected ? props.selected : {});
@@ -25,6 +24,7 @@ const CategoriesAutocomplete = props => {
       props.onChange(props.selected);
       setLoading(false)
     }
+    // eslint-disable-next-line
   }, [props.selected])
 
   const getCategories = () => {

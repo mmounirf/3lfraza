@@ -2,16 +2,33 @@ import React from "react";
 import "./Dashboard.scss";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { Paper, Button } from "@material-ui/core";
+import { Paper, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from "@material-ui/core";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import StoreIcon from "@material-ui/icons/Store";
 import PersonIcon from "@material-ui/icons/Person";
 import { CreateProduct } from "../../Components";
+import Firebase from "../../Config/Firebase";
 
 const Dashboard = () => {
   const [value, setValue] = React.useState(0);
+  const [products, setProducts] = React.useState([]);
   const [openCreateProduct, setOpenCreateProduct] = React.useState(false);
+  const getData = () => {
+    Firebase.firestore()
+      .collection("products")
+      .get()
+      .then((snapshot) => {
+        setProducts(
+          snapshot.docs.map((doc) => {
+            return { ...doc.data(), id: doc.id };
+          })
+        );
+      });
+  };
   const handleChange = (event, newValue) => {
+    if (newValue === 1 && products.length === 0) {
+      getData();
+    }
     setValue(newValue);
   };
 
@@ -27,11 +44,40 @@ const Dashboard = () => {
       case 1:
         return (
           <div className="products">
+            <div className="header">
+
             <h1>المنتجات</h1>
             <Button onClick={() => setOpenCreateProduct(true)} variant="contained" color="primary" disableElevation>
               إضافة منتج
             </Button>
-            <CreateProduct open={openCreateProduct} handleClose={() => setOpenCreateProduct(false)} />
+            </div>
+            <CreateProduct open={openCreateProduct} handleClose={() => setOpenCreateProduct(false)} refreshProducts={() => getData()}/>
+            {value === 1 && (
+              <TableContainer>
+                <Table className="productsTable">
+                  <TableHead className="tableHeader">
+                    <TableRow>
+                      <TableCell align="right">الصورة</TableCell>
+                      <TableCell align="right">الأسم</TableCell>
+                      <TableCell align="right">التصنيف</TableCell>
+                      <TableCell align="right">السعر</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {products.map((row) => (
+                      <TableRow key={row.id}>
+                        <TableCell align="right" className="productImg">
+                          <img width="50" src={row.img} alt="product-img" />
+                        </TableCell>
+                        <TableCell align="right">{row.name}</TableCell>
+                        <TableCell align="right">{row.category.name}</TableCell>
+                        <TableCell align="right">{row.price}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
           </div>
         );
 
