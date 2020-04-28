@@ -4,14 +4,14 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 const config = {
-  apiKey: "AIzaSyBrUM7JVi1eb6USvLPwmWNvZydXfcGyHQI",
-  authDomain: "alfraza-app.firebaseapp.com",
-  databaseURL: "https://alfraza-app.firebaseio.com",
-  projectId: "alfraza-app",
-  storageBucket: "alfraza-app.appspot.com",
-  messagingSenderId: "849176150513",
-  appId: "1:849176150513:web:9eac8aa0dc790244050450",
-  measurementId: "G-QXQN1ZVRY4"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_ADMIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MSG_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_GA_ID,
 };
 
 const Firebase = app.initializeApp(config);

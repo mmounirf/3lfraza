@@ -8,6 +8,7 @@ import StoreIcon from "@material-ui/icons/Store";
 import PersonIcon from "@material-ui/icons/Person";
 import { CreateProduct } from "../../Components";
 import Firebase from "../../Config/Firebase";
+import { Message, Money } from "@material-ui/icons";
 
 const Dashboard = () => {
   const [value, setValue] = React.useState(0);
@@ -88,6 +89,20 @@ const Dashboard = () => {
           </div>
         );
 
+        case 3:
+          return (
+            <div className="messages">
+              <h1>الرسائل</h1>
+            </div>
+          );
+
+          case 4:
+            return (
+              <div className="messages">
+                <h1>المكسب</h1>
+              </div>
+            );
+
       default:
         break;
     }
@@ -100,6 +115,9 @@ const Dashboard = () => {
           <Tab className="tab" label="المتجر" icon={<StoreIcon />} />
           <Tab className="tab" label="المنتجات" icon={<ShoppingBasketIcon />} />
           <Tab className="tab" label="إدارة الحساب" icon={<PersonIcon />} />
+          <Tab className="tab" label="الرسائل" icon={<Message />} />
+          <Tab className="tab" label="المكسب" icon={<Money />} />
+
         </Tabs>
         <Paper className="tabContent">{tabContent(value)}</Paper>
       </div>
